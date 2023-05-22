@@ -28,18 +28,22 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-        />
-        <Stack.Screen
-          name="Trip"
-          component={TripScreen}
-        />
-        <Stack.Screen
-          name="Preferences"
-          component={PreferencesScreen}
-        />
+        <Stack.Group>
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+          />
+          <Stack.Screen
+            name="Trip"
+            component={TripScreen}
+          />
+        </Stack.Group>
+        <Stack.Group screenOptions={{ presentation: 'modal' }}>
+          <Stack.Screen
+            name="Preferences"
+            component={PreferencesScreen}
+          />
+        </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
   );

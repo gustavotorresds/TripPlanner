@@ -6,7 +6,7 @@
  */
 
 import { useState, React } from 'react';
-import { TripsContext } from './context/TripsContext.tsx';
+import { TripsContext } from './context/TripsContext';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
@@ -28,14 +28,14 @@ const App = () => {
   const [trips, setTrips] = useState([
     {
       title: 'A week with family in the U.S.',
-      startDate: new Date(2023, 8, 20),
-      endDate: new Date(2023, 8, 27),
+      startDate: '2023-08-20',
+      endDate: '2023-08-27',
       cities: ['Miami', 'San Francisco'],
     },
     {
       title: 'A week with family in Brazil',
-      startDate: new Date(2023, 8, 20),
-      endDate: new Date(2023, 11, 20),
+      startDate: '2023-08-20',
+      endDate: '2023-11-20',
       cities: ['São Paulo', 'Rio de Janeiro'],
     },
   ]);

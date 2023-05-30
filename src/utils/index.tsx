@@ -1,11 +1,14 @@
-export const tripDateString = ({ title, startDate, endDate}) => {
-  const startDay = startDate.getDate();
-  const startMonth = startDate.toLocaleString('default', { month: 'short' });
-  const startYear = startDate.getFullYear();
+export const tripDateString = ({ startDate, endDate }) => {
+  const startDateJS = new Date(startDate);
+  const endDateJS = new Date(endDate);
 
-  const endDay = endDate.getDate();
-  const endMonth = endDate.toLocaleString('default', { month: 'short' });
-  const endYear = endDate.getFullYear();
+  const startDay = startDateJS.getDate();
+  const startMonth = startDateJS.toLocaleString('default', { month: 'short' });
+  const startYear = startDateJS.getFullYear();
+
+  const endDay = endDateJS.getDate();
+  const endMonth = endDateJS.toLocaleString('default', { month: 'short' });
+  const endYear = endDateJS.getFullYear();
 
   if (startYear !== endYear) {
     return `${startMonth} ${startDay}, ${startYear} - ${endMonth} ${endDay}, ${endYear}`

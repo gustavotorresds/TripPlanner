@@ -11,10 +11,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import { TripsContext } from '../../context/TripsContext.tsx';
-import {
-  tripDateString
-} from '../../utils'
+import { TripsContext } from '../../context/TripsContext';
+import { tripDateString } from '../../utils';
 
 
 const Header = () => (

@@ -5,10 +5,10 @@
  * @format
  */
 
-import React from 'react';
+import { useState, React } from 'react';
+import { TripsContext } from './context/TripsContext.tsx';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -25,27 +25,44 @@ import PreferencesScreen from './pages/Preferences'
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+  const [trips, setTrips] = useState([
+    {
+      title: 'A week with family in the U.S.',
+      startDate: new Date(2023, 8, 20),
+      endDate: new Date(2023, 8, 27),
+      cities: ['Miami', 'San Francisco'],
+    },
+    {
+      title: 'A week with family in Brazil',
+      startDate: new Date(2023, 8, 20),
+      endDate: new Date(2023, 11, 20),
+      cities: ['São Paulo', 'Rio de Janeiro'],
+    },
+  ]);
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Group>
-          <Stack.Screen
-            name="Home"
-            component={HomeScreen}
-          />
-          <Stack.Screen
-            name="Trip"
-            component={TripScreen}
-          />
-        </Stack.Group>
-        <Stack.Group screenOptions={{ presentation: 'modal' }}>
-          <Stack.Screen
-            name="Preferences"
-            component={PreferencesScreen}
-          />
-        </Stack.Group>
-      </Stack.Navigator>
-    </NavigationContainer>
+    <TripsContext.Provider value={{ trips, setTrips }}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Group>
+            <Stack.Screen
+              name="Home"
+              component={HomeScreen}
+            />
+            <Stack.Screen
+              name="Trip"
+              component={TripScreen}
+            />
+          </Stack.Group>
+          <Stack.Group screenOptions={{ presentation: 'modal' }}>
+            <Stack.Screen
+              name="Preferences"
+              component={PreferencesScreen}
+            />
+          </Stack.Group>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </TripsContext.Provider>
   );
 }
 

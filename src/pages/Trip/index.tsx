@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -12,21 +12,24 @@ import {
 } from 'react-native';
 
 import {
-  tripDateString
+  tripDateString,
+  destinationCitiesString,
 } from '../../utils'
 
 const TripScreen = ({ route, navigation }) => {
   const { trip } = route.params;
+  // const { title, startDate, endDate, from, cities } = trip;
+  // const [stateFrom, setStateFrom] = useState(from);
 
   return (
     <View style={styles.container}>
       <Text style={styles.tripTitle}>{trip.title}</Text>
 
       <TouchableOpacity
-        onPress={() => navigation.navigate('Preferences')}
+        onPress={() => navigation.navigate('Preferences', { trip: trip })}
         style={styles.preferencesButton}
       >
-        <Text style={styles.buttonFont}>{trip.cities.join(', ')} • {tripDateString(trip)}</Text>
+        <Text style={styles.buttonFont}>{destinationCitiesString(trip)} • {tripDateString(trip)}</Text>
       </TouchableOpacity>
     </View>);
 };

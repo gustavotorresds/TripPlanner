@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -8,21 +8,110 @@ import {
   useColorScheme,
   View,
   Button,
+  TouchableOpacity,
+  TextInput,
 } from 'react-native';
 
-const PreferencesScreen = ({ navigation }) => (
-  <View style={styles.container}>
-    <View style={styles.card}>
-      <Text style={styles.cardTitle}>Where from?</Text>
+import {
+  tripDateString,
+  destinationCitiesString,
+  numberOfPeopleString,
+  cityFromString,
+} from '../../utils';
+
+const PreferencesScreen = ({ route, navigation }) => {
+  const { trip } = route.params;
+
+  const [activeField, setActiveField] = useState(undefined);
+  const [tempTrip, setTempTrip] = useState(trip);
+
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity
+        onPress={() => setActiveField('from') }
+        style={styles.card}
+      >
+        <View style={styles.cardHeader}>
+          <Text style={styles.cardTitle}>Where from?</Text>
+          <Text style={styles.cardDescription}>{cityFromString(tempTrip)}</Text>
+        </View>
+        {activeField == 'from' ?
+          <TextInput
+            style={styles.cityInput}
+            value={tempTrip.cityFrom}
+            onChangeText={(newText) => setTempTrip({...tempTrip, cityFrom: newText})}
+          />
+          :
+          undefined
+        }
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() => setActiveField('destinations') }
+        style={styles.card}
+      >
+        <View style={styles.cardHeader}>
+          <Text style={styles.cardTitle}>Where to?</Text>
+          <Text style={styles.cardDescription}>{destinationCitiesString(tempTrip)}</Text>
+        </View>
+
+        {activeField == 'destinations' ?
+          <View>
+            {tempTrip.destinationCities.map((dC, idx) =>
+              <TextInput
+                style={styles.cityInput}
+                value={dC.city}
+                onChangeText={(newText) => setTempTrip({
+                  ...tempTrip,
+                  destinationCities: [
+                    ...tempTrip.destinationCities.slice(0, idx),
+                    { ...tempTrip.destinationCities[idx], city: newText },
+                    ...tempTrip.destinationCities.slice(idx + 1),
+                  ]
+                })}
+                key={`dC-${idx}`}
+              />
+            )}
+            <TextInput
+              style={styles.cityInput}
+              placeholder="Add destination"
+              value=""
+              onChangeText={(newText) => setTempTrip({
+                ...tempTrip,
+                destinationCities: [
+                  ...tempTrip.destinationCities,
+                  { city: newText, numberOfDays: 0 }
+                ]
+              })}
+            />
+            </View>
+          :
+          undefined
+        }
+      </TouchableOpacity>
+
+      <View style={styles.card}>
+        <View style={styles.cardHeader}>
+          <Text style={styles.cardTitle}>When?</Text>
+          <Text style={styles.cardDescription}>{tripDateString(tempTrip)}</Text>
+        </View>
+      </View>
+
+      <View style={styles.card}>
+        <View style={styles.cardHeader}>
+          <Text style={styles.cardTitle}>Who?</Text>
+          <Text style={styles.cardDescription}>{numberOfPeopleString(tempTrip)}</Text>
+        </View>
+      </View>
+
+      <View style={styles.card}>
+        <View style={styles.cardHeader}>
+          <Text style={styles.cardTitle}>Time in each destination?</Text>
+        </View>
+      </View>
     </View>
-    <View style={styles.card}>
-      <Text style={styles.cardTitle}>When?</Text>
-    </View>
-    <View style={styles.card}>
-      <Text style={styles.cardTitle}>Who?</Text>
-    </View>
-  </View>
-);
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -48,9 +137,28 @@ const styles = StyleSheet.create({
     shadowRadius: 40,
     elevation: 5,
   },
+  cardHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   cardTitle: {
+    flex: 1,
     fontSize: 22,
     fontWeight: 'bold',
+  },
+  cardDescription: {
+    flex: 1,
+    textAlign: 'right',
+    fontSize: 16,
+  },
+  cityInput: {
+    padding: 15,
+    backgroundColor: '#fff',
+    marginVertical: 20,
+    borderRadius: 10,
+    borderColor: '#474747',
+    borderWidth: 1,
+    fontSize: 14,
   },
 });
 

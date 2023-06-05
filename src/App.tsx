@@ -30,13 +30,23 @@ const App = () => {
       title: 'A week with family in the U.S.',
       startDate: '2023-08-20',
       endDate: '2023-08-27',
-      cities: ['Miami', 'San Francisco'],
+      cityFrom: 'São Paulo',
+      destinationCities: [
+          { city: 'Miami', numberOfDays: 4 },
+          { city: 'San Francisco', numberOfDays: 3 }
+      ],
+      numberOfPeople: 4,
     },
     {
       title: 'A week with family in Brazil',
       startDate: '2023-08-20',
       endDate: '2023-11-20',
-      cities: ['São Paulo', 'Rio de Janeiro'],
+      cityFrom: 'San Francisco',
+      destinationCities: [
+          { city: 'São Paulo', numberOfDays: 4 },
+          { city: 'Rio de Janeiro', numberOfDays: 3 }
+      ],
+      numberOfPeople: 1,
     },
   ]);
 

@@ -18,3 +18,15 @@ export const tripDateString = ({ startDate, endDate }) => {
 
   return `${startMonth} ${startDay} - ${endDay}, ${startYear}`
 }
+
+export const numberOfPeopleString = ({ numberOfPeople }) => {
+  return `${numberOfPeople} ${numberOfPeople > 1 ? 'people' : 'person'}`
+}
+
+export const destinationCitiesString = ({ destinationCities }) => {
+  return destinationCities.map((dC) => dC.city).join(', ');
+}
+
+export const cityFromString = ({ cityFrom }) => {
+  return cityFrom;
+}

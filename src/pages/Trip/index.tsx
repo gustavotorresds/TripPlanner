@@ -15,25 +15,21 @@ import {
   tripDateString
 } from '../../utils'
 
-const trip = {
-    title: 'A week with family in the U.S.',
-    startDate: new Date(2023, 8, 20),
-    endDate: new Date(2023, 8, 27),
-    cities: ['Miami', 'SF']
+const TripScreen = ({ route, navigation }) => {
+  const { trip } = route.params;
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.tripTitle}>{trip.title}</Text>
+
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Preferences')}
+        style={styles.preferencesButton}
+      >
+        <Text style={styles.buttonFont}>{trip.cities.join(', ')} • {tripDateString(trip)}</Text>
+      </TouchableOpacity>
+    </View>);
 };
-
-const TripScreen = ({ navigation }) => (
-  <View style={styles.container}>
-    <Text style={styles.tripTitle}>{trip.title}</Text>
-
-    <TouchableOpacity
-      onPress={() => navigation.navigate('Preferences')}
-      style={styles.preferencesButton}
-    >
-      <Text style={styles.buttonFont}>{trip.cities.join(', ')} • {tripDateString(trip)}</Text>
-    </TouchableOpacity>
-  </View>
-);
 
 const styles = StyleSheet.create({
   container: {

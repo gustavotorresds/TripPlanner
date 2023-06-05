@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, useContext } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -11,22 +11,9 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import {
-  tripDateString
-} from '../../utils'
+import { TripsContext } from '../../context/TripsContext';
+import { tripDateString } from '../../utils';
 
-const trips = [
-  {
-    title: 'A week with family in the U.S.',
-    startDate: new Date(2023, 8, 20),
-    endDate: new Date(2023, 8, 27),
-  },
-  {
-    title: 'A week with family in Brazil',
-    startDate: new Date(2023, 8, 20),
-    endDate: new Date(2023, 11, 20),
-  },
-];
 
 const Header = () => (
   <View style={styles.header}>
@@ -36,7 +23,7 @@ const Header = () => (
 
 const TripCard = ({ navigation, trip }) => (
   <TouchableOpacity
-    onPress={() => navigation.navigate('Trip')}
+    onPress={() => navigation.navigate('Trip', { trip: trip})}
     style={styles.tripCard}
   >
     <View>
@@ -46,7 +33,7 @@ const TripCard = ({ navigation, trip }) => (
   </TouchableOpacity>
 );
 
-const UpcomingTrips = ({ navigation }) => (
+const UpcomingTrips = ({ navigation, trips }) => (
   <View style={styles.section}>
     <Text style={styles.h2}>Upcoming</Text>
     <View>
@@ -62,13 +49,17 @@ const PastTrips = () => (
   </View>
 );
 
-const HomeScreen = ({ navigation }) => (
-  <View style={styles.container}>
-    <Header/>
-    <UpcomingTrips navigation={ navigation }/>
-    <PastTrips/>
-  </View>
-);
+const HomeScreen = ({ navigation }) => {
+  const { trips, setTrips } = useContext(TripsContext);
+
+  return (
+    <View style={styles.container}>
+      <Header/>
+      <UpcomingTrips navigation={ navigation } trips={ trips } />
+      <PastTrips/>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
